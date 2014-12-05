@@ -74,22 +74,12 @@ class GoogleMap {
         $out .= '	<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=' . $this->api_key . '&sensor=' . $this->sensor . '"></script>';
 
         $out .= '	<script type="text/javascript"> 
-    	
-						function doAnimation() 
-						{
-							if (marker.getAnimation() != null) 
-							{
-								marker.setAnimation(null); 
-							} 
-							else 
-							{
-								marker.setAnimation(google.maps.Animation.' . $this->animation . ');
-							}
-						}
+
 		
     					function initialize() 
     					{
-    						
+    						var infowindow = new google.maps.InfoWindow();
+
     						var myOptions = {
     							center: new google.maps.LatLng(' . $this->lat . ',' . $this->lon . '), 
     							Zoom:' . $this->zoom . ', 
@@ -102,26 +92,44 @@ class GoogleMap {
         $i = 0;
         foreach ($this->markers as $key => $value) {
             $out .="var marker" . $i . " = new google.maps.Marker({
-									 												position: new google.maps.LatLng(" . $value . "), 
+									 												position: new google.maps.LatLng(" . $value['lonlat'] . "),
 									 												map: map,";
-            if ($this->animation != '') {
-                $out .="animation: google.maps.Animation." . $this->animation . ",";
-            }
             if ($this->icon != '') {
                 $out .="icon:'" . $this->icon . "',";
             } elseif (count($this->icons) > 0) {
                 $out .="icon:'" . $this->icons[$i] . "',";
             }
             $out .="title:'" . $key . "'});";
-            if ($this->animation != '') {
-                $out .="google.maps.event.addListener(marker" . $i . ", 'click', doAnimation);";
-            }
+
+            ob_start();
+            ?>
+            var contentString<?php echo $i; ?> =
+                '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading"><?php echo $key; ?></h1>'+
+                    '<div id="bodyContent">'+
+                        'Clicks: <?php echo $value['Clicks']; ?><br />'+
+                        'Views: <?php echo $value['Impressions']; ?><br />'+
+                    '</div>'+
+                '</div>';
+
+            google.maps.event.addListener(marker<?php echo $i; ?>, "mouseover", (function(marker<?php echo $i; ?>){
+                return function(){
+                    infowindow.setContent(contentString<?php echo $i; ?>);
+                    infowindow.open(map, this);
+                }
+            })(marker<?php echo $i; ?>));
+
+            <?php
+            $out .= ob_get_clean();
 
             $i++;
         }
 
-        $out .= '		} 
-						
+        $out .= '		}
+
+
 						initialize();
 					
 					</script>';
