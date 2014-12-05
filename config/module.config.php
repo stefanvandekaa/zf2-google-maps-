@@ -1,6 +1,6 @@
 <?php
 return array(
     'GMaps'=> array(
-        'api_key' => 'your google map api key',
+        'api_key' => 'AIzaSyAWFXeCEBZjc06Vu_TlfhzbZksTVZNrG2A',
     ),
 );
