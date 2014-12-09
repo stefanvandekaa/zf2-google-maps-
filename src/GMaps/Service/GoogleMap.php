@@ -81,7 +81,7 @@ class GoogleMap {
     						var infowindow = new google.maps.InfoWindow();
 
     						var myOptions = {
-    							center: new google.maps.LatLng(' . $this->lat . ',' . $this->lon . '), 
+    							center: new google.maps.LatLng(' . str_replace(',', '.', $this->lat) . ',' . str_replace(',', '.', $this->lon) . '),
     							Zoom:' . $this->zoom . ', 
     							mapTypeId: google.maps.MapTypeId.ROADMAP 
 							};';
