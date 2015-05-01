@@ -107,10 +107,10 @@ class GoogleMap {
                 '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading"><?php echo $key; ?></h1>'+
+                    '<h1 id="firstHeading" class="firstHeading"><?php echo $value['Title']; ?></h1>'+
                     '<div id="bodyContent">'+
-                        'Clicks: <?php echo $value['Clicks']; ?><br />'+
-                        'Views: <?php echo $value['Impressions']; ?><br />'+
+                        'Kliks: <?php echo $value['Clicks']; ?><br />'+
+                        'Vertoningen: <?php echo $value['Impressions']; ?><br />'+
                     '</div>'+
                 '</div>';
 
