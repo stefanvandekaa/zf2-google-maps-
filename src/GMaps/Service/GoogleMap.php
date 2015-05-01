@@ -107,7 +107,7 @@ class GoogleMap {
                 '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading"><?php echo $value['Title']; ?></h1>'+
+                    '<h1 id="firstHeading" class="firstHeading"><?php echo str_replace("'","`",$value['Title']); ?></h1>'+
                     '<div id="bodyContent">'+
                         'Kliks: <?php echo $value['Clicks']; ?><br />'+
                         'Vertoningen: <?php echo $value['Impressions']; ?><br />'+
